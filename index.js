@@ -1,26 +1,3 @@
-// const url = 'https://dog.ceo/api/breeds/image/random';
-
-// fetch(url)
-//     .then(response => {
-        
-//         if (!response.ok) {
-//             throw new Error("Network response was not ok");
-//         }
-       
-//         return response.json();
-//     })
-//     .then(data => {
-        
-//         console.log("Response data:", data);
-//         const img = document.createElement('img');
-//         img.src = data.message;
-//         img.alt = 'Random Dog';
-//         document.body.appendChild(img);
-//     })
-//     .catch(error => {
-       
-//         console.error("There was a problem with the fetch operation:", error);
-//     });
 const today = new Date();
 const thisYear = today.getFullYear();
 const footer = document.querySelector("footer");
@@ -28,68 +5,78 @@ const copyright = document.createElement("p");
 copyright.innerHTML = `Aigul Stetchi &copy; ${thisYear}`;
 footer.appendChild(copyright);
 
-
-// Create the anchor element styled as a button
-const button = document.createElement("a");
-button.innerText = "Find your four-legged friend";
-button.href = "/dogs"; // 
-button.className = "find-friend-button";
-
-// Add the button to a specific section of your page
-document.getElementById("dogs").appendChild(button);
-
-
 document.addEventListener("DOMContentLoaded", function () {
-    const websiteName = document.getElementById("websiteName");
-    const dogs = document.getElementById("dogs");
-    
-    websiteName.addEventListener("click", function (event) {
-    event.preventDefault();
-    console.log("websiteName")
-    // fetchData("");
-    });
-    
-    dogs.addEventListener("click", function (event) {
-    event.preventDefault();
-    console.log("dogs")
-    // fetchData("");
-    });
-    
-    // fetchData("");
+    const homeSection = document.getElementById("home");
+    const dogsSection = document.getElementById("dogs");
+    const homeLink = document.getElementById("homeLink");
+    const dogsLink = document.getElementById("dogsLink");
+    const goToDogsButton = document.getElementById("goToDogs"); // Button on the Home page
+
+    // Navigation between Home and Dogs sections
+    homeLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        homeSection.style.display = "block";
+        dogsSection.style.display = "none";
     });
 
+    dogsLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        homeSection.style.display = "none";
+        dogsSection.style.display = "block";
+        fetchDogs(); // Fetch dog data when navigating to the Dogs page
+    });
 
+    // Handle button click to go to the Dogs page
+    goToDogsButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        homeSection.style.display = "none";
+        dogsSection.style.display = "block";
+        fetchDogs(); // Fetch dog data when clicking the button
+    });
 
+    // Function to fetch dog images and breeds from API
+    function fetchDogs() {
+        const headers = new Headers({
+            "Content-Type": "application/json",
+            "x-api-key": "DEMO-API-KEY"
+        });
 
+        const requestOptions = {
+            method: 'GET',
+            headers: headers,
+            redirect: 'follow'
+        };
 
-const headers = new Headers({
-    "Content-Type": "application/json",
-    "x-api-key": "DEMO-API-KEY" // 
-  });
-  
-  const requestOptions = {
-    method: 'GET',
-    headers: headers,
-    redirect: 'follow'
-  };
-  
-  fetch("https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=10", requestOptions)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json(); // Преобразование ответа в JSON
-    })
-    .then(result => {
-      console.log(result); // Выводим JSON-данные в консоль
-  
-      // Опционально: отображаем изображение на странице
-      if (result && result[0] && result[0].url) {
-        const img = document.createElement('img');
-        img.src = result[0].url;
-        img.alt = 'Random Dog';
-        img.style.maxWidth = '100%'; // Устанавливаем максимальную ширину изображения
-        // document.body.appendChild(img);
-      }
-    })
-    .catch(error => console.log('error', error));
+        fetch("https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=10", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                const dogContainer = document.getElementById("dog-container");
+                dogContainer.innerHTML = ""; // Clear any previous content
+
+                result.forEach(dog => {
+                    const dogDiv = document.createElement('div');
+                    dogDiv.classList.add('dog');
+
+                    // Add image
+                    const img = document.createElement('img');
+                    img.src = dog.url;
+                    img.alt = 'Dog';
+                    dogDiv.appendChild(img);
+
+                    // Add breed info (if available)
+                    if (dog.breeds && dog.breeds.length > 0) {
+                        const breedName = document.createElement('h4');
+                        breedName.innerText = dog.breeds[0].name;
+                        dogDiv.appendChild(breedName);
+
+                        const breedInfo = document.createElement('p');
+                        breedInfo.innerText = `Breed group: ${dog.breeds[0].breed_group || 'Unknown'}`;
+                        dogDiv.appendChild(breedInfo);
+                    }
+
+                    dogContainer.appendChild(dogDiv);
+                });
+            })
+            .catch(error => console.log('Error fetching dog data:', error));
+    }
+});
