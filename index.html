@@ -1,21 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <link rel="stylesheet" href="index.css">
-    </head>
-    <body>
-        <header>
-           
-        </header>
-    <main>
-      
-    </main>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description"
+          content="Welcome to Stetchi Aigul's portfolio. Explore projects, skills, and experience in web development, software engineering, and more.">
+    <meta name="keywords"
+          content="Stetchi Aigul, portfolio, web development, software engineering, programming, coding, projects, developer skills, technology, web design">
+    <meta name="author" content="Aigul Stetchi">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playwrite+AU+QLD:wght@100..400&display=swap"
+          rel="stylesheet">
+    <title>Aigul Stetchi API project</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<header>
+    <div id="header">
+        <ul id="nav">
+            <li><a href="#" id="homeLink">Home</a></li>
+            <li><a href="#" id="dogsLink">Dogs</a></li>
+        </ul>
+    </div>
+</header>
 
-    <footer id="connect"> 
-           
-    </footer>
-     <script src="index.js"></script>
-    </body>
+<main>
+    <!-- Home Section -->
+    <section id="home">
+        <div class="background-image"></div>
+        <div id="boxHome">
+            <h1>Dogs</h1>
+            <p>This website was created for dog lovers.</p>
+            <a href="#" id="goToDogs" class="find-friend-button">Find your four-legged friend</a>
+        </div>
+    </section>
+<!-- 
+    Dogs Section --> -->
+    <section id="dogs" style="display:none">
+        <h2>Find your four-legged friend</h2>
+        <div id="button-container">
+            <a href="#" id="dogsImagesButton" class="find-friend-button">Dogs Images</a>
+            <a href="#" id="dogsBreedsButton" class="find-friend-button">Dogs Breeds</a>
+        </div>
+        <div id="dog-container">
+            Dog images and breeds will be rendered here -->
+        </div>
+    </section>
+    
+
+</main>
+
+<footer id="connect">
+    <div id="connectLinks">
+        <a href="https://github.com/aygim" target="_blank">github</a>
+        <a href="mailto:stetchi.aigul@gmail.com" target="_blank">gmail</a>
+    </div>
+</footer>
+
+<script src="index.js"></script>
+</body>
 </html>
